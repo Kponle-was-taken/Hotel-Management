@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import pent1 from "../assets/pent1.jpg";
-import pent2 from "../assets/pent2.jpg";
-import grand1 from "../assets/grand1.jpg";
-import grand2 from "../assets/grand2.jpg";
-import grand3 from "../assets/grand3.jpg";
-import cele1 from "../assets/cele1.jpg";
-import cele2 from "../assets/cele2.jpg";
-import cele3 from "../assets/cele3.jpg";
-import cele4 from "../assets/cele4.jpg";
-import cele5 from "../assets/cele5.jpg";
+import pent1 from "/src/assets/pent1.jpg";
+import pent2 from "/src/assets/pent2.jpg";
+import grand1 from "/src/assets/grand1.jpg";
+import grand2 from "/src/assets/grand2.jpg";
+import grand3 from "/src/assets/grand3.jpg";
+import cele1 from "/src/assets/cele1.jpg";
+import cele2 from "/src/assets/cele2.jpg";
+import cele3 from "/src/assets/cele3.jpg";
+import cele4 from "/src/assets/cele4.jpg";
+import cele5 from "/src/assets/cele5.jpg";
 
 // Floor definitions with updated pricing and room counts
 const floorDefinitions = [
