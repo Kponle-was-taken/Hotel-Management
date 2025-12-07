@@ -10,9 +10,9 @@ const Home = () => {
 
   useEffect(() => {
     // Set SEO metadata for home page
-    document.title = "The Ashbourne - Luxury Hotel & Suites";
-    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Experience unparalleled luxury and timeless elegance at The Ashbourne. Discover our exquisite rooms, signature amenities, and book your unforgettable stay today.');
-    document.querySelector('meta[name="keywords"]')?.setAttribute('content', 'luxury hotel, the ashbourne, 5-star hotel, suites, fine dining, spa, hotel booking');
+    document.title = "The Ashford - Luxury Hotel & Suites";
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Experience unparalleled luxury and timeless elegance at The Ashford. Discover our exquisite rooms, signature amenities, and book your unforgettable stay today.');
+    document.querySelector('meta[name="keywords"]')?.setAttribute('content', 'luxury hotel, the ashford, 5-star hotel, suites, fine dining, spa, hotel booking');
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,7 +34,7 @@ const Home = () => {
           <div className="absolute inset-0 bg-black bg-opacity-40" />
           <div className="relative z-10 p-4">
             <h1 className="text-4xl md:text-6xl font-font1 tracking-wider leading-tight">
-              The Ashbourne
+              The Ashford
             </h1>
             <p className="mt-4 text-lg md:text-xl font-light">
               Experience Unparalleled Luxury and Timeless Elegance.
@@ -55,7 +55,7 @@ const Home = () => {
             A Sanctuary of Sophistication
           </h2>
           <p className="max-w-3xl mx-auto text-color2 leading-relaxed">
-            Nestled in the heart of the city, The Ashbourne stands as a beacon of luxury and refined comfort. Our historic landmark has been meticulously restored to blend classical elegance with modern amenities, offering a unique and unforgettable stay for discerning travelers. Discover a world where every detail is crafted for your comfort.
+            Nestled in the heart of the city, The Ashford stands as a beacon of luxury and refined comfort. Our historic landmark has been meticulously restored to blend classical elegance with modern amenities, offering a unique and unforgettable stay for discerning travelers. Discover a world where every detail is crafted for your comfort.
           </p>
         </section>
 

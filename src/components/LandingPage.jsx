@@ -13,7 +13,7 @@ const LandingPage = ({ onNavigateToRooms, onRequestBooking }) => {
         <div className="absolute inset-0 bg-black bg-opacity-40" />
         <div className="relative z-10 p-4">
           <h1 className="text-4xl md:text-6xl font-font1 tracking-wider leading-tight">
-            The Ashbourne
+            The Ashford
           </h1>
           <p className="mt-4 text-lg md:text-xl font-light">
             Experience Unparalleled Luxury and Timeless Elegance.
@@ -34,7 +34,7 @@ const LandingPage = ({ onNavigateToRooms, onRequestBooking }) => {
           A Sanctuary of Sophistication
         </h2>
         <p className="max-w-3xl mx-auto text-color2 leading-relaxed">
-          Nestled in the heart of the city, The Ashbourne stands as a beacon of luxury and refined comfort. Our historic landmark has been meticulously restored to blend classical elegance with modern amenities, offering a unique and unforgettable stay for discerning travelers. Discover a world where every detail is crafted for your comfort.
+          Nestled in the heart of the city, The Ashford stands as a beacon of luxury and refined comfort. Our historic landmark has been meticulously restored to blend classical elegance with modern amenities, offering a unique and unforgettable stay for discerning travelers. Discover a world where every detail is crafted for your comfort.
         </p>
       </section>
 
