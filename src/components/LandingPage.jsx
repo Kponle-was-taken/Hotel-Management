@@ -1,6 +1,6 @@
 import React from 'react';
 import Rooms from '../components/Rooms';
-import banner from "..assets/colonial.jpg";
+import banner from "../assets/colonial.jpg";
 
 const LandingPage = ({ onNavigateToRooms, onRequestBooking }) => {
   return (
