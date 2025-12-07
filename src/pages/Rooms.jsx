@@ -6,8 +6,8 @@ import BookingModal from "../components/BookingModal";
 
 const RoomsPage = () => {
   useEffect(() => {
-    document.title = "Rooms & Suites - The Ashford";
-    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Explore our Rooms & Suites at The Ashford. From Garden Retreats to the Crown Penthouse, discover spaces crafted for comfort and refinement.');
+    document.title = "Rooms & Suites - The Ashbourne";
+    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Explore our Rooms & Suites at The Ashbourne. From Garden Retreats to the Crown Penthouse, discover spaces crafted for comfort and refinement.');
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);

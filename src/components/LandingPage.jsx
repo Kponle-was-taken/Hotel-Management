@@ -1,6 +1,6 @@
 import React from 'react';
 import Rooms from '../components/Rooms';
-import heroImage from '../assets/grand1.jpg'; // Using an existing image for the hero section
+import banner from "..assets/colonial.jpg";
 
 const LandingPage = ({ onNavigateToRooms, onRequestBooking }) => {
   return (
@@ -8,7 +8,7 @@ const LandingPage = ({ onNavigateToRooms, onRequestBooking }) => {
       {/* 1. Hero Section */}
       <section
         className="relative bg-cover bg-center h-[60vh] md:h-[80vh] text-white flex flex-col items-center justify-center text-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${banner})` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40" />
         <div className="relative z-10 p-4">
