@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root{
+    --emerald: #0B5F3A;
+    --cream: #F5EBDD;
+    --antique-gold: #C9A04A;
+    --mahogany: #3A2A21;
+    --muted: rgba(10,10,10,0.6);
+    --max-width: 1200px;
+}
+
+body{
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    color: var(--mahogany);
+    background-color: var(--cream);
+}
+
+.font-font1{ /* body */
+    font-family: 'Inter', sans-serif;
+}
+
+.font-font2{ /* headings */
+    font-family: 'Playfair Display', serif;
+}
+
+.text-color{
+    color: var(--antique-gold);
+}
+.text-color2{
+    color: var(--mahogany);
+}
+
+.bg-color{
+    background-color: var(--cream) ;
+}
+
+.container-max{
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
