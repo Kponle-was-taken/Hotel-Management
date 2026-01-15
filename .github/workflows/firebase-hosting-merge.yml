@@ -11,27 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm run build
+      - name: Install Root Dependencies
+        run: npm ci
+      - name: Install Function Dependencies
+        run: cd functions && npm ci
+      - name: Build Project
+        run: npm run build
+      # This action deploys only to Firebase Hosting. If you need to deploy Cloud Functions
+      # as well, you would add another step here using the Firebase CLI.
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASHBOURNE_HOTEL }}
           channelId: live
           projectId: ashbourne-hotel
-
-
-          steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20' # Or your preferred version
-
-      - name: Install dependencies
-        run: npm ci  # Use 'npm ci' for faster, consistent builds in CI/CD
-
-      - name: Run build
-        run: npm run build
-        

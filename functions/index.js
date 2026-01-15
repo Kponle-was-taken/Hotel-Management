@@ -35,8 +35,8 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
         ],
         mode: "payment",
         // Replace with your actual deployed frontend URL or localhost for testing
-        success_url: "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: "http://localhost:5173/",
+        success_url: "https://ashbourne-hotel.web.app/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: "https://ashbourne-hotel.web.app/",
         client_reference_id: bookingId,
         customer_email: email,
       });
