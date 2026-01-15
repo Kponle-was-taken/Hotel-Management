@@ -7,8 +7,47 @@ import grand3 from "/src/assets/grand3.jpg";
 import cele1 from "/src/assets/cele1.jpg";
 import cele2 from "/src/assets/cele2.jpg";
 import cele3 from "/src/assets/cele3.jpg";
-import cele4 from "/src/assets/cele4.jpg";
-import cele5 from "/src/assets/cele5.jpg";
+import cele4 from "../assets/cele4.jpg";
+import cele5 from "../assets/cele5.jpg";
+import regency1 from "../assets/regency 1.jpg";
+import regency2 from "../assets/regency 2.jpg";
+import regency3 from "../assets/regency 3.jpg";
+import regency4 from "../assets/regency 4.jpg";
+import regency5 from "../assets/regency 5.jpg";
+import regency6 from "../assets/regency 6.jpg";
+import manor1 from "../assets/manor 1.jpg";
+import manor2 from "../assets/manor 2.jpg";
+import manor3 from "../assets/manor 3.jpg";
+import manor4 from "../assets/manor 4.jpg";
+import manor5 from "../assets/manor 5.jpg";
+import manor6 from "../assets/manor 6.jpg";
+import manor7 from "../assets/manor 7.jpg";
+import manor8 from "../assets/manor 8.jpg";
+import heritage1 from "../assets/heritage 1.jpg";
+import heritage2 from "../assets/heritage 2.jpg";
+import heritage3 from "../assets/heritage 3.jpg";
+import heritage4 from "../assets/heritage 4.jpg";
+import heritage5 from "../assets/heritage 5.jpg";
+import heritage6 from "../assets/heritage 6.jpg";
+import heritage7 from "../assets/heritage 7.jpg";
+import heritage8 from "../assets/heritage 8.jpg";
+import garden1 from "../assets/garden 1.jpg";
+import garden2 from "../assets/garden 2.jpg";
+import garden3 from "../assets/garden 3.jpg";
+import garden4 from "../assets/garden 4.jpg";
+import garden5 from "../assets/garden 5.jpg";
+import garden6 from "../assets/garden 6.jpg";
+import garden7 from "../assets/garden 7.jpg";
+import garden8 from "../assets/garden 8.jpg";
+import Clocktower1 from "../assets/clocktower 1.jpg";
+import Clocktower2 from "../assets/clocktower 2.jpg";
+import Clocktower3 from "../assets/clocktower 3.jpg";
+import Clocktower4 from "../assets/clocktower 4.jpg";
+import Clocktower5 from "../assets/clocktower 5.jpg";
+import Clocktower6 from "../assets/clocktower 6.jpg";
+import Clocktower7 from "../assets/clocktower 7.jpg";
+
+
 
 // Floor definitions with updated pricing and room counts
 const floorDefinitions = [
@@ -58,6 +97,14 @@ const floorDefinitions = [
   },
   {
     floor: 5, name: "Regency Elegance", basePrice: 550, roomCount: 6, description: "Classical elegance with period furnishings, state-of-the-art amenities, and views",
+    images:[
+      regency1,
+      regency2,
+      regency3,
+      regency4,
+      regency5,
+      regency6
+    ],
     details: {
       beds: "1 Queen Bed",
       kitchen: "N/A",
@@ -67,6 +114,15 @@ const floorDefinitions = [
   },
   {
     floor: 4, name: "Clocktower Chambers", basePrice: 425, roomCount: 7, description: "Historic charm with contemporary comfort, heritage details, and intimate ambiance",
+    images:[
+      Clocktower1,
+      Clocktower2,
+      Clocktower3,
+      Clocktower4,
+      Clocktower5,
+      Clocktower6,
+      Clocktower7
+    ],
     details: {
       beds: "1 Queen Bed",
       kitchen: "N/A",
@@ -76,14 +132,44 @@ const floorDefinitions = [
   },
   {
     floor: 3, name: "Heritage Collection", basePrice: 325, roomCount: 8, description: "Colonial-inspired rooms with authentic architectural details and timeless elegance",
+    images:[
+      heritage1,
+      heritage2,
+      heritage3,
+      heritage4,
+      heritage5,
+      heritage6,
+      heritage7,
+      heritage8
+    ],
     details: { beds: "1 Double Bed", kitchen: "N/A", bathroom: "Standard bathroom", features: ["Colonial-inspired decor", "Authentic architectural details"] }
   },
   {
     floor: 2, name: "Manor Rooms", basePrice: 225, roomCount: 8, description: "Comfortable and refined accommodations with distinguished style and warm hospitality",
+    images:[
+      manor1,
+      manor2,
+      manor3,
+      manor4,
+      manor5,
+      manor6,
+      manor7,
+      manor8
+    ],
     details: { beds: "2 Twin Beds or 1 Double Bed", kitchen: "N/A", bathroom: "Standard bathroom", features: ["Distinguished, classic style", "Warm and inviting atmosphere"] }
   },
   {
     floor: 1, name: "Garden Retreat", basePrice: 150, roomCount: 8, description: "Ground-level serenity with garden views, natural light, and peaceful ambiance",
+    images:[
+      garden1,
+      garden2,
+      garden3,
+      garden4,
+      garden5,
+      garden6,
+      garden7,
+      garden8
+    ],
     details: { beds: "1 Double Bed", kitchen: "N/A", bathroom: "Standard bathroom with shower", features: ["Direct garden access or views", "Abundant natural light"] }
   },
 ];
@@ -132,7 +218,11 @@ const Rooms = ({ categoriesOnly = false, onRequestBooking }) => {
   // Handler to update room availability
   const handleBooking = (bookedRoom) => {
     if (onRequestBooking) {
-      onRequestBooking(bookedRoom);
+      const floorDef = floorDefinitions.find(f => f.floor === bookedRoom.floor);
+      onRequestBooking({
+        room: bookedRoom,
+        floorName: floorDef ? floorDef.name : null,
+      });
     }
 
     // Update the state to mark the room as unavailable
@@ -253,7 +343,7 @@ const Rooms = ({ categoriesOnly = false, onRequestBooking }) => {
                     <div className="flex items-center justify-between">
                       <span className="font-semibold">From USD {minPrice}/night</span>
                       {onRequestBooking ? (
-                        <button onClick={() => onRequestBooking(floorBlock.name)} className="px-4 py-2 rounded-md font-semibold text-white" style={{ backgroundColor: "var(--emerald)" }}>
+                      <button onClick={() => onRequestBooking({ floorName: floorBlock.name, room: null })} className="px-4 py-2 rounded-md font-semibold text-white" style={{ backgroundColor: "var(--emerald)" }}>
                           Explore
                         </button>
                       ) : (

@@ -6,6 +6,7 @@ import Contact from './pages/Contact'
 import Facilities from './pages/Facilities'
 import Team from './pages/Team'
 import RoomsPage from './pages/Rooms'
+import AdminDashboard from './components/AdminDashboard'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/facilities' element={<Facilities />} />
         <Route path='/teams' element={<Team />} />
         <Route path='/rooms' element={<RoomsPage />} />
+        <Route path='/admin' element={<AdminDashboard />} />
       </Routes>
     </>
   )

@@ -1,0 +1,46 @@
+type User @table {
+  email: String!
+  passwordHash: String!
+  createdAt: Timestamp!
+  firstName: String
+  lastName: String
+  phoneNumber: String
+}
+
+type RoomType @table {
+  name: String!
+  description: String!
+  basePrice: Float!
+  capacity: Int!
+  createdAt: Timestamp!
+  imageUrls: [String]
+  amenities: [String]
+}
+
+type Room @table {
+  roomNumber: String!
+  roomType: RoomType!
+  createdAt: Timestamp!
+  currentStatus: String
+}
+
+type Booking @table {
+  user: User!
+  room: Room!
+  checkInDate: Date!
+  checkOutDate: Date!
+  totalGuests: Int!
+  totalPrice: Float!
+  bookingStatus: String!
+  createdAt: Timestamp!
+  specialRequests: String
+  paymentDetails: String
+}
+
+type Review @table {
+  user: User!
+  room: Room!
+  rating: Int!
+  createdAt: Timestamp!
+  comment: String
+}

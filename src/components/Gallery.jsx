@@ -1,68 +1,77 @@
 import React, { useState } from "react";
-
+import pent1 from "/src/assets/pent1.jpg";
+import dining from "../assets/fine dining.jpg";
+import spa from "../assets/spa.jpg";
+import pool from "../assets/infinity pool.jpg";
+import ballroom from "../assets/ballroom.jpg";
+import garden from "../assets/garden.jpg";
+import regency from "../assets/regency suite.jpg";
+import breakfast from "../assets/breakfast.jpg";
+import library from "../assets/library.jpg";
+ 
 const Gallery = () => {
   const galleryItems = [
     {
       id: 1,
       title: "Crown Penthouse Suite",
       category: "rooms",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=1",
+      image: pent1,
       description: "Luxury penthouse with panoramic views",
     },
     {
       id: 2,
       title: "Fine Dining Restaurant",
       category: "dining",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=2",
+      image: dining,
       description: "Award-winning culinary experience",
     },
     {
       id: 3,
       title: "Heritage Spa",
       category: "spa",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=3",
+      image: spa,
       description: "Relaxation and rejuvenation",
     },
     {
       id: 4,
       title: "Infinity Pool",
       category: "facilities",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=4",
+      image: pool,
       description: "Heated pool with panoramic views",
     },
     {
       id: 5,
       title: "Grand Ballroom",
       category: "events",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=5",
+      image: ballroom,
       description: "Perfect for celebrations and events",
     },
     {
       id: 6,
       title: "Heritage Garden",
       category: "grounds",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=6",
+      image: garden,
       description: "Beautifully landscaped grounds",
     },
     {
       id: 7,
       title: "Regency Suite",
       category: "rooms",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=7",
+      image: regency,
       description: "Elegant accommodation with period details",
     },
     {
       id: 8,
       title: "Breakfast Terrace",
       category: "dining",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=8",
+      image: breakfast,
       description: "Morning dining with garden views",
     },
     {
       id: 9,
       title: "Library Lounge",
       category: "common",
-      image: "https://source.unsplash.com/collection/483251/800x600?sig=9",
+      image: library,
       description: "Quiet retreat with historic charm",
     },
   ];

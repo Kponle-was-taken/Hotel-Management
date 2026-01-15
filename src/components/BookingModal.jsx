@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { checkAvailability } from "../utils/availability";
+import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../Firebase";
 
 const FOCUSABLE = 'a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
+const BookingModal = ({ open, onClose, onRequest, initialFloor, initialRoom }) => {
   const today = new Date();
   const isoDate = (d) => d.toISOString().slice(0, 10);
   const tomorrow = new Date(today);
@@ -17,10 +19,13 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
     checkin: isoDate(today),
     checkout: isoDate(tomorrow),
     guests: 2,
+    room: null,
   });
 
   const [errors, setErrors] = useState({});
   const [avail, setAvail] = useState({ loading: false, available: null, pricePerNight: 0, totalPrice: 0, nights: 0, message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const dialogRef = useRef(null);
 
   // focus-trap: keep tab within modal
@@ -67,11 +72,15 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
 
   // when modal opens with an initialFloor prop, prefill the form.floor
   useEffect(() => {
-    if (open && initialFloor) {
-      setForm((s) => ({ ...s, floor: initialFloor }));
-      setErrors((s) => ({ ...s, floor: undefined }));
+    if (open) {
+      setForm((s) => ({
+        ...s,
+        floor: initialFloor || s.floor,
+        room: initialRoom || null,
+      }));
+      if (initialFloor) setErrors((s) => ({ ...s, floor: undefined }));
     }
-  }, [open, initialFloor]);
+  }, [open, initialFloor, initialRoom]);
 
   const validate = (values) => {
     const errs = {};
@@ -97,7 +106,7 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
     setErrors((s) => ({ ...s, [name]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validation = validate(form);
     if (Object.keys(validation).length) {
@@ -111,11 +120,33 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
       alert("Selected room/dates are unavailable. Please adjust your selection.");
       return;
     }
-    const payload = { ...form, pricing: avail };
-    console.log("Booking requested:", payload);
-    if (onRequest) onRequest(payload);
-    else alert(`Booking requested — ${form.floor} — ${avail.totalPrice} USD (demo)`);
-    onClose && onClose();
+
+    setIsSubmitting(true);
+
+      try {
+      const docRef = await addDoc(collection(db, "bookings"), {
+        ...form,
+        pricing: avail,
+        createdAt: new Date().toISOString(),
+        paymentStatus: "pending",
+      });
+
+      const paymentLink = `${window.location.origin}/payment/${docRef.id}`;
+      await updateDoc(doc(db, "bookings", docRef.id), { paymentLink });
+      
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+
+      const payload = { ...form, pricing: avail };
+      console.log("Booking requested:", payload);
+      if (onRequest) onRequest(payload);
+      
+    } catch (error) {
+      console.error("Error adding booking: ", error);
+      setIsSubmitting(false);
+      alert("Failed to send booking request. Please try again.");
+    }
+    // Note: onClose is now handled by the success modal button
   };
 
   // debounced availability
@@ -153,9 +184,39 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-label="Booking form">
       <div className="absolute inset-0 bg-black/60" onClick={() => onClose && onClose()} />
 
-      <div ref={dialogRef} className="relative bg-white rounded-lg max-w-lg w-full mx-4 p-6 shadow-2xl">
+      <div ref={dialogRef} className="relative bg-white rounded-lg max-w-lg w-full mx-4 p-6 shadow-2xl overflow-hidden">
+        
+        {/* Processing Overlay */}
+        {isSubmitting && (
+          <div className="absolute inset-0 bg-white/95 z-50 flex flex-col items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-emerald-600 mb-4"></div>
+            <h3 className="text-xl font-font2 text-mahogany">Processing Booking...</h3>
+            <p className="text-gray-500 mt-2">Please wait while we secure your reservation.</p>
+          </div>
+        )}
+
+        {/* Success Overlay */}
+        {submitSuccess && (
+          <div className="absolute inset-0 bg-white z-50 flex flex-col items-center justify-center p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <span className="text-3xl text-green-600">✓</span>
+            </div>
+            <h3 className="text-2xl font-font2 text-mahogany mb-2">Request Received!</h3>
+            <p className="text-gray-600 mb-6">
+              Thank you, {form.name}. We have received your booking request for <strong>{form.floor}</strong>.
+              <br /><br />
+              A confirmation email has been sent to <strong>{form.email}</strong>.
+            </p>
+            <button onClick={() => { onClose && onClose(); setSubmitSuccess(false); }} className="px-8 py-3 rounded-md font-semibold text-white transition-colors" style={{ backgroundColor: "var(--emerald)" }}>
+              Done
+            </button>
+          </div>
+        )}
+
         <div className="flex items-start justify-between">
-          <h3 className="text-xl font-font2">Book Your Stay</h3>
+          <h3 className="text-xl font-font2">
+            {initialRoom ? `Book: ${initialRoom.name}` : 'Book Your Stay'}
+          </h3>
           <button onClick={() => onClose && onClose()} aria-label="Close booking form" className="text-gray-600 hover:text-gray-900">✕</button>
         </div>
 
@@ -214,7 +275,13 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
 
             <label className="flex flex-col">
               <span className="text-sm text-gray-700">Floor Category</span>
-              <select name="floor" value={form.floor} onChange={handleChange} className="mt-1 p-2 border rounded">
+              <select
+                name="floor"
+                value={form.floor}
+                onChange={handleChange}
+                className="mt-1 p-2 border rounded"
+                disabled={!!initialRoom}
+              >
                 <option>The Crown Penthouse</option>
                 <option>Grand Suites Collection</option>
                 <option>Celestial Heights</option>
@@ -271,8 +338,13 @@ const BookingModal = ({ open, onClose, onRequest, initialFloor }) => {
             <div>{Object.keys(errors).length > 0 && <div className="text-red-600 text-sm" role="alert">Please fix the highlighted fields before submitting.</div>}</div>
             <div className="flex items-center gap-2">
               <button type="button" onClick={() => onClose && onClose()} className="px-4 py-2 rounded border">Cancel</button>
-              <button type="submit" disabled={avail.available === false} className={`px-4 py-2 rounded text-white font-semibold ${avail.available === false ? 'bg-gray-400 cursor-not-allowed' : 'bg-(--emerald)'}`}>
-                Request Booking
+              <button 
+                type="submit" 
+                disabled={avail.loading || isSubmitting} 
+                className={`px-4 py-2 rounded text-white font-semibold ${avail.available === false ? 'bg-gray-500' : ''} ${avail.loading || isSubmitting ? 'opacity-70 cursor-wait' : ''}`}
+                style={avail.available !== false && !avail.loading && !isSubmitting ? { backgroundColor: "var(--emerald)" } : {}}
+              >
+                {avail.loading ? "Checking..." : isSubmitting ? "Processing..." : "Request Booking"}
               </button>
             </div>
           </div>

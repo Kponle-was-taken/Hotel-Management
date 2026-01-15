@@ -11,7 +11,7 @@ const RoomsPage = () => {
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [bookingFloor, setBookingFloor] = useState(null);
+  const [bookingTarget, setBookingTarget] = useState({ room: null, floorName: null });
 
   return (
     <>
@@ -19,14 +19,15 @@ const RoomsPage = () => {
         <Navbar />
       </div>
       <div className="pt-24">
-        <Rooms onRequestBooking={(floorName) => {
-          setBookingFloor(floorName);
+        <Rooms onRequestBooking={(target) => {
+          setBookingTarget(target);
           setModalOpen(true);
         }} />
         <BookingModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
-          initialFloor={bookingFloor}
+          initialFloor={bookingTarget.floorName}
+          initialRoom={bookingTarget.room}
           onRequest={(payload) => {
             // pass-through: by default just log and close
             console.log('Booking payload from Rooms page:', payload);
